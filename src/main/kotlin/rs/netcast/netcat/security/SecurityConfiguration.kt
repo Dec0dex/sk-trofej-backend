@@ -27,12 +27,18 @@ class SecurityConfiguration: WebSecurityConfigurerAdapter() {
         http.cors().and()
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers("/api/log/**").permitAll()
-            .antMatchers("/api/auth").permitAll()
+            .antMatchers("/api/docs",
+                "/actuator/**",
+                "/swagger-ui.html",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/**",
+                "/swagger-ui.html",
+                "/webjars/**",
+                "/csrf",
+                "/error").permitAll()
             .anyRequest().authenticated()
             .and()
-            .addFilter(UserAuthenticationFilter(authenticationManager()))
-            .addFilter(UserAuthorizationFilter(authenticationManager()))
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
