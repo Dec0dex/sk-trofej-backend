@@ -28,12 +28,12 @@ data class Device(
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
-    val createdAt: Date,
+    val createdAt: Date = Date(),
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     @LastModifiedDate
-    var updatedAt: Date,
+    var updatedAt: Date = Date(),
 
     @OneToMany(
         cascade = [CascadeType.ALL],
@@ -43,5 +43,5 @@ data class Device(
     val logs: List<Log> = ArrayList(),
 
     @ManyToMany(mappedBy = "devices")
-    val applications: List<Application>
+    val applications: List<Application> = ArrayList()
 )

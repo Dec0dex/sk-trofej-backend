@@ -19,24 +19,27 @@ import javax.persistence.TemporalType
 @Entity(name = "credit_card_table")
 @EntityListeners(AuditingEntityListener::class)
 data class CreditCard(
+    val type: String,
+
+    val number: String,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id", nullable = false)
+    val company: Company,
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-
-    val type: String,
-    val number: String,
+    val id: Long = 0,
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
-    val createdAt: Date,
+    val createdAt: Date = Date(),
+
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     @LastModifiedDate
-    var updatedAt: Date,
+    var updatedAt: Date = Date()
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", nullable = false)
-    val company: Company
 )

@@ -20,30 +20,32 @@ import javax.persistence.TemporalType
 @Entity(name = "log_table")
 @EntityListeners(AuditingEntityListener::class)
 data class Log(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-
     val level: LogLevel,
 
     val timeStamp: Long,
+
     val tag: String,
 
     @Column(columnDefinition = "TEXT")
     val message: String,
+
     val affectedVersion: String,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "device_id", nullable = false)
+    val device: Device,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0,
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
-    val createdAt: Date,
+    val createdAt: Date = Date(),
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     @LastModifiedDate
-    var updatedAt: Date,
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "device_id", nullable = false)
-    val device: Device
+    var updatedAt: Date = Date()
 )

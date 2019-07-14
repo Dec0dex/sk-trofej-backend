@@ -21,29 +21,29 @@ import javax.persistence.TemporalType
 @Entity(name = "application_table")
 @EntityListeners(AuditingEntityListener::class)
 data class Application(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-
     var name: String,
-    var description: String,
 
+    var description: String,
     @Column(name = "access_token")
     var accessToken: String,
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false, updatable = false)
-    @CreatedDate
-    val createdAt: Date,
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at")
-    @LastModifiedDate
-    var updatedAt: Date,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)
     val company: Company,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0,
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @CreatedDate
+    val createdAt: Date = Date(),
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
+    @LastModifiedDate
+    var updatedAt: Date = Date(),
 
     @ManyToMany
     @JoinTable(

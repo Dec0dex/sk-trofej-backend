@@ -9,10 +9,6 @@ import javax.persistence.*
 @Entity(name = "user_table")
 @EntityListeners(AuditingEntityListener::class)
 data class User(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-
     @Column(unique = true)
     val username: String,
 
@@ -20,6 +16,15 @@ data class User(
 
     @Column(unique = true)
     var email: String,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id", nullable = false)
+    val company: Company,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0,
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
@@ -28,9 +33,5 @@ data class User(
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     @LastModifiedDate
-    var updatedAt: Date,
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", nullable = false)
-    val company: Company
+    var updatedAt: Date = Date()
 )
