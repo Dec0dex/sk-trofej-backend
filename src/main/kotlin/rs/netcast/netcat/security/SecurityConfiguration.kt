@@ -36,7 +36,8 @@ class SecurityConfiguration: WebSecurityConfigurerAdapter() {
                 "/swagger-ui.html",
                 "/webjars/**",
                 "/csrf",
-                "/error").permitAll()
+                "/error",
+                "/api/subscription-plan/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .sessionManagement()

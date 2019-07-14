@@ -22,31 +22,35 @@ import javax.xml.stream.events.Comment
 @Entity(name = "company_table")
 @EntityListeners(AuditingEntityListener::class)
 data class Company(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-
     var name: String,
 
     @Column(name = "subscribed_until")
     var subscribedUntil: Date,
 
     var country: String,
+
     var city: String,
     var address: String,
-
     @Column(name = "postal_code")
     var postalCode: String,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subscription_plan_id", nullable = false)
+    val subscriptionPlan: SubscriptionPlan,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0,
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
-    val createdAt: Date,
+    val createdAt: Date = Date(),
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     @LastModifiedDate
-    var updatedAt: Date,
+    var updatedAt: Date = Date(),
 
     @OneToMany(
         cascade = [CascadeType.ALL],
@@ -67,9 +71,5 @@ data class Company(
         fetch = FetchType.LAZY,
         mappedBy = "company"
     )
-    val applications: MutableList<Application> = ArrayList(),
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subscription_plan_id", nullable = false)
-    val subscriptionPlan: SubscriptionPlan
+    val applications: MutableList<Application> = ArrayList()
 )
