@@ -37,7 +37,7 @@ class SecurityConfiguration: WebSecurityConfigurerAdapter() {
                 "/webjars/**",
                 "/csrf",
                 "/error",
-                "/api/subscription-plan/**").permitAll()
+                "/api/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .sessionManagement()

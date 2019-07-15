@@ -36,7 +36,7 @@ data class Company(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subscription_plan_id", nullable = false)
-    val subscriptionPlan: SubscriptionPlan,
+    var subscriptionPlan: SubscriptionPlan,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
