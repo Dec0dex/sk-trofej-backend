@@ -3,7 +3,7 @@ package rs.netcast.netcat.domain.model
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
-import java.util.Date
+import java.util.*
 import javax.persistence.*
 
 @Entity(name = "user_table")
@@ -28,7 +28,7 @@ data class User(
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
-    val createdAt: Date,
+    val createdAt: Date = Date(),
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")

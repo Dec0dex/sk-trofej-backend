@@ -14,27 +14,27 @@ class CompanyController {
     lateinit var companyService: CompanyService
 
     @GetMapping
-    fun getAllSubscriptionPlans(): List<CompanyDto> {
+    fun getAllCompanies(): List<CompanyDto> {
         return companyService.getAllCompanies()
     }
 
     @GetMapping("/{id}")
-    fun getSubscriptionPlanByID(@PathVariable id: Long): CompanyDto {
+    fun getCompanyById(@PathVariable id: Long): CompanyDto {
         return companyService.getCompanyById(id)
     }
 
     @DeleteMapping("/{id}")
-    fun deleteSubscriptionPlanById(@PathVariable id: Long) {
+    fun deleteCompany(@PathVariable id: Long) {
         return companyService.deleteCompany(id)
     }
 
     @PostMapping
-    fun createSubscriptionPlan(@RequestBody companyRegistrationDto: CompanyRegistrationDto): CompanyDto {
+    fun createCompany(@RequestBody companyRegistrationDto: CompanyRegistrationDto): CompanyDto {
         return companyService.createCompany(companyRegistrationDto)
     }
 
     @PutMapping("/{id}")
-    fun updateSubscriptionPlan(
+    fun updateCompany(
         @PathVariable id: Long, @RequestBody companyRegistrationDto: CompanyRegistrationDto
     ): CompanyDto {
         return companyService.updateCompany(companyRegistrationDto, id)

@@ -15,11 +15,11 @@ class NetCatUserDetails : UserDetailsService {
 
 
     override fun loadUserByUsername(username: String?): UserDetails {
-            if (username == null)
-                throw IllegalArgumentException("Username can't be null")
+        if (username == null)
+            throw IllegalArgumentException("Username can't be null")
 
-            val user = userDao.findByUsername(username) ?: throw  UsernameNotFoundException(username)
+        val user = userDao.findByUsername(username) ?: throw  UsernameNotFoundException(username)
 
-            return NetCatUserPrincipal(user)
+        return NetCatUserPrincipal(user)
     }
 }
