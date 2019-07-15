@@ -30,8 +30,8 @@ data class Device(
         fetch = FetchType.LAZY,
         mappedBy = "device"
     )
-    val logs: List<Log> = ArrayList(),
+    val logs: List<Log>? = ArrayList(),
 
     @ManyToMany(mappedBy = "devices")
-    val applications: List<Application> = ArrayList()
+    val applications: MutableList<Application>? = ArrayList()
 )

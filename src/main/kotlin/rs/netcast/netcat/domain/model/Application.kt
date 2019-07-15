@@ -42,5 +42,12 @@ data class Application(
         joinColumns = [JoinColumn(name = "application_id")],
         inverseJoinColumns = [JoinColumn(name = "device_id")]
     )
-    val devices: List<Device> = ArrayList()
+    val devices: List<Device> = ArrayList(),
+
+    @OneToMany(
+        cascade = [CascadeType.ALL],
+        fetch = FetchType.LAZY,
+        mappedBy = "application"
+    )
+    val logs: List<Log> = ArrayList()
 )

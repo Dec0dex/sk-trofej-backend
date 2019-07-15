@@ -1,6 +1,5 @@
 package rs.netcast.netcat.domain.model
 
-import org.springframework.boot.logging.LogLevel
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -24,6 +23,11 @@ data class Log(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "device_id", nullable = false)
     val device: Device,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "application_id", nullable = false)
+    val application: Application,
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
