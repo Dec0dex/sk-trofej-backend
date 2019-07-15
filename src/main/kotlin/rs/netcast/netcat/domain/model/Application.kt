@@ -20,6 +20,8 @@ data class Application(
     @JoinColumn(name = "company_id", nullable = false)
     val company: Company,
 
+    var iconImage: String? = null,
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
