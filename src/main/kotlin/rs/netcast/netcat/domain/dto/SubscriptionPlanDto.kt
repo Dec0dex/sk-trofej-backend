@@ -1,7 +1,7 @@
 package rs.netcast.netcat.domain.dto
 
 import rs.netcast.netcat.domain.model.SubscriptionPlan
-import java.util.Date
+import java.util.*
 
 class SubscriptionPlanDto() {
 

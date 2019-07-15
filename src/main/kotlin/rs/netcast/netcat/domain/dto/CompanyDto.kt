@@ -5,7 +5,7 @@ import java.util.*
 
 class CompanyDto() {
 
-    constructor(company: Company):this() {
+    constructor(company: Company) : this() {
         name = company.name
         subscriptionPlan = SubscriptionPlanDto(company.subscriptionPlan)
         subscriptionUntil = company.subscribedUntil
