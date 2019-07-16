@@ -1,0 +1,5 @@
+<root>
+    <item name='com.querydsl.core.types.dsl.StringExpression com.querydsl.core.types.dsl.BooleanExpression containsIgnoreCase(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

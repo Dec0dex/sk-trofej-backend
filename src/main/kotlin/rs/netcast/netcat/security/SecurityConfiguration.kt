@@ -2,6 +2,7 @@ package rs.netcast.netcat.security
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -37,11 +38,16 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
                 "/swagger-ui.html",
                 "/webjars/**",
                 "/csrf",
-                "/error",
-                "/api/**"
+                "/error"
             ).permitAll()
+            .antMatchers(HttpMethod.POST, "/api/log").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/company").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/user").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/auth").permitAll()
             .anyRequest().authenticated()
             .and()
+            .addFilter(UserAuthenticationFilter(authenticationManager()))
+            .addFilter(UserAuthorizationFilter(authenticationManager()))
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }

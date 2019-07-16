@@ -13,5 +13,6 @@ class LogCreationDto {
     lateinit var mac: String
     lateinit var os: String
     lateinit var ip: String
+    var email: String? = null
     var timestamp: Long = 0
 }
