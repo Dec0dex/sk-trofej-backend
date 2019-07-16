@@ -1,7 +1,10 @@
 package rs.netcast.netcat.services
 
+import com.querydsl.core.types.Predicate
 import io.jsonwebtoken.Jwts
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import rs.netcast.netcat.domain.dao.ApplicationDao
 import rs.netcast.netcat.domain.dao.DeviceDao
@@ -40,6 +43,10 @@ class LogService {
         logRepository.deleteById(id)
     }
 
+    fun getLogs(pageable: Pageable, predicate: Predicate?): Page<LogDto> {
+        return logRepository.findAll(predicate, pageable).map { LogDto(it) }
+    }
+
     fun deleteLogByApplicationId(id: Long) {
         val application = applicationRepository.findById(id)
 
@@ -52,7 +59,7 @@ class LogService {
 
     fun createLog(logDto: LogCreationDto): LogDto {
         val application = getApplicationFromAccessToken(logDto.accessToken)
-        val device = getUpdatedDevice(logDto.mac, logDto.os, logDto.ip, application)
+        val device = getUpdatedDevice(logDto.mac, logDto.os, logDto.ip, logDto.email, application)
 
         val log =
             Log(logDto.level, logDto.timestamp, logDto.tag, logDto.message, logDto.affectedVersion, device, application)
@@ -77,14 +84,21 @@ class LogService {
         return application.get()
     }
 
-    private fun getUpdatedDevice(mac: String, os: String, ip: String, application: Application): Device {
+    private fun getUpdatedDevice(
+        mac: String,
+        os: String,
+        ip: String,
+        email: String?,
+        application: Application
+    ): Device {
         return if (deviceRepository.existsById(mac)) {
             val device = deviceRepository.findById(mac)
             device.get().ip = ip
+            device.get().email = email
             device.get().applications?.add(application)
             deviceRepository.save(device.get())
         } else {
-            val device = Device(mac, os, ip)
+            val device = Device(mac, os, ip, email)
             device.applications?.add(application)
             deviceRepository.save(device)
         }

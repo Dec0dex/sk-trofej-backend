@@ -8,10 +8,12 @@ class DeviceDto() {
         mac = device.mac
         os = device.os
         ip = device.ip
+        email = device.email
     }
 
     lateinit var mac: String
     lateinit var os: String
     lateinit var ip: String
+    var email: String? = null
 
 }

@@ -1,6 +1,7 @@
 package rs.netcast.netcat.services
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import rs.netcast.netcat.domain.dao.CompanyDao
 import rs.netcast.netcat.domain.dao.UserDao
@@ -17,6 +18,9 @@ class UserService {
 
     @Autowired
     lateinit var companyRepository: CompanyDao
+
+    @Autowired
+    lateinit var passwordEncoder: PasswordEncoder
 
     fun getAllUsersForCompanyId(companyId: Long): List<UserDto> {
         val company = companyRepository.findById(companyId)
@@ -50,7 +54,7 @@ class UserService {
             throw ResourceNotFoundException()
         }
 
-        val user = User(userDto.username, userDto.password, userDto.email, company.get())
+        val user = User(userDto.username, passwordEncoder.encode(userDto.password), userDto.email, company.get())
         return UserDto(userRepository.save(user))
     }
 

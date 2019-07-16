@@ -15,6 +15,8 @@ data class Device(
     val os: String,
     var ip: String,
 
+    var email: String? = null,
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate

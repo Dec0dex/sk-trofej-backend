@@ -37,8 +37,8 @@ class UserAuthorizationFilter(authenticationManager: AuthenticationManager) :
     }
 
     private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
-        val token = request.getHeader(SecurityConstants.TOKEN_HEADER)
-        if (token != "" && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+        val token: String? = request.getHeader(SecurityConstants.TOKEN_HEADER)
+        if (token != null && token != "" && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
             try {
                 val signingKey = SecurityConstants.JWT_SECRET.toByteArray()
 
