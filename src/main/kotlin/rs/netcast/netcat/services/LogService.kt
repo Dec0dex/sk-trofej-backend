@@ -16,6 +16,7 @@ import rs.netcast.netcat.domain.model.Device
 import rs.netcast.netcat.domain.model.Log
 import rs.netcast.netcat.exceptions.ResourceNotFoundException
 import rs.netcast.netcat.security.SecurityConstants
+import rs.netcast.netcat.services.querydsl.QueryDslProvider
 
 @Service
 class LogService {
@@ -28,6 +29,9 @@ class LogService {
 
     @Autowired
     lateinit var applicationRepository: ApplicationDao
+
+    @Autowired
+    lateinit var queryDslProvider: QueryDslProvider
 
     fun getLogById(id: Long): LogDto {
         val log = logRepository.findById(id)
@@ -45,6 +49,17 @@ class LogService {
 
     fun getLogs(pageable: Pageable, predicate: Predicate?): Page<LogDto> {
         return logRepository.findAll(predicate, pageable).map { LogDto(it) }
+    }
+
+    fun getLogsForApplicationId(pageable: Pageable, predicate: Predicate?, applicationId: Long): Page<LogDto> {
+        val application = applicationRepository.findById(applicationId)
+
+        if (application.isEmpty) {
+            throw ResourceNotFoundException()
+        }
+
+        val calculatedPredicate = queryDslProvider.addConstraintApplicationToLog(predicate, application.get())
+        return logRepository.findAll(calculatedPredicate, pageable).map { LogDto(it) }
     }
 
     fun deleteLogByApplicationId(id: Long) {

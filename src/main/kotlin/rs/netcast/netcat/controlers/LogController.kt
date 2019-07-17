@@ -48,4 +48,14 @@ class LogController {
     ): Page<LogDto> {
         return logService.getLogs(pageable, predicate)
     }
+
+    @GetMapping("/application/{id}")
+    fun getLogsForApplicationId(
+        @QuerydslPredicate(
+            root = Log::class,
+            bindings = LogDao::class
+        ) predicate: Predicate?, pageable: Pageable, @PathVariable id: Long
+    ): Page<LogDto> {
+        return logService.getLogsForApplicationId(pageable, predicate, id)
+    }
 }
