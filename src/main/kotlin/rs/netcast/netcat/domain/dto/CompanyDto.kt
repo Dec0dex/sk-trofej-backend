@@ -16,6 +16,7 @@ class CompanyDto() {
 
         createdAt = company.createdAt
         updatedAt = company.updatedAt
+        id = company.id
     }
 
     lateinit var name: String

@@ -44,6 +44,8 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
             .antMatchers(HttpMethod.POST, "/api/company").permitAll()
             .antMatchers(HttpMethod.POST, "/api/user").permitAll()
             .antMatchers(HttpMethod.POST, "/api/auth").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/subscription-plan/").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/subscription-plan").permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilter(UserAuthenticationFilter(authenticationManager()))
