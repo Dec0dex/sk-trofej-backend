@@ -43,6 +43,12 @@ class UserService {
         return UserDto(user.get())
     }
 
+    fun getUserByUsername(username: String): UserDto {
+        val user = userRepository.findByUsername(username) ?: throw ResourceNotFoundException()
+
+        return UserDto(user)
+    }
+
     fun deleteUserById(id: Long) {
         return userRepository.deleteById(id)
     }
