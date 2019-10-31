@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>rs.netcast</groupId>
-    <artifactId>netcat</artifactId>
+    <artifactId>netcat-backend</artifactId>
     <version>0.0.1</version>
-    <name>netcat</name>
+    <name>netcat-backend</name>
     <description>Advanced Crash and Logging system</description>
 
     <properties>
