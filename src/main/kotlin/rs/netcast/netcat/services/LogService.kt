@@ -36,7 +36,7 @@ class LogService {
     fun getLogById(id: Long): LogDto {
         val log = logRepository.findById(id)
 
-        if (log.isEmpty) {
+        if (!log.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -54,7 +54,7 @@ class LogService {
     fun getLogsForApplicationId(pageable: Pageable, predicate: Predicate?, applicationId: Long): Page<LogDto> {
         val application = applicationRepository.findById(applicationId)
 
-        if (application.isEmpty) {
+        if (!application.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -65,7 +65,7 @@ class LogService {
     fun deleteLogByApplicationId(id: Long) {
         val application = applicationRepository.findById(id)
 
-        if (application.isEmpty) {
+        if (!application.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -92,7 +92,7 @@ class LogService {
         val applicationId = parsedToken.body.subject.toLong()
         val application = applicationRepository.findById(applicationId)
 
-        if (application.isEmpty) {
+        if (!application.isPresent) {
             throw ResourceNotFoundException()
         }
 

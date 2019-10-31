@@ -21,7 +21,7 @@ class SubscriptionPlanService {
     fun getSubscriptionPlanById(id: Long): SubscriptionPlanDto {
         val data = repository.findById(id)
 
-        if (data.isEmpty) {
+        if (!data.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -41,7 +41,7 @@ class SubscriptionPlanService {
     fun updateSubscriptionPlan(id: Long, subscriptionPlanDto: SubscriptionPlanDto): SubscriptionPlanDto {
         val subscriptionPlan = repository.findById(id)
 
-        if (subscriptionPlan.isEmpty) {
+        if (!subscriptionPlan.isPresent) {
             throw ResourceNotFoundException()
         }
 

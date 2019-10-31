@@ -25,7 +25,7 @@ class UserService {
     fun getAllUsersForCompanyId(companyId: Long): List<UserDto> {
         val company = companyRepository.findById(companyId)
 
-        if (company.isEmpty) {
+        if (!company.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -36,7 +36,7 @@ class UserService {
     fun getUserById(id: Long): UserDto {
         val user = userRepository.findById(id)
 
-        if (user.isEmpty) {
+        if (!user.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -56,7 +56,7 @@ class UserService {
     fun createUser(userDto: UserRegistrationDto): UserDto {
         val company = companyRepository.findById(userDto.companyId)
 
-        if (company.isEmpty) {
+        if (!company.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -67,13 +67,13 @@ class UserService {
     fun updateUser(userDto: UserRegistrationDto, id: Long): UserDto {
         val company = companyRepository.findById(userDto.companyId)
 
-        if (company.isEmpty) {
+        if (!company.isPresent) {
             throw ResourceNotFoundException()
         }
 
         val user = userRepository.findById(id)
 
-        if (user.isEmpty) {
+        if (!user.isPresent) {
             throw ResourceNotFoundException()
         }
 

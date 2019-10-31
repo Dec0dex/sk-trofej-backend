@@ -26,7 +26,7 @@ class CompanyService {
     fun getCompanyById(id: Long): CompanyDto {
         val company = companyRepository.findById(id)
 
-        if (company.isEmpty) {
+        if (!company.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -40,7 +40,7 @@ class CompanyService {
     fun createCompany(companyDto: CompanyRegistrationDto): CompanyDto {
         val subscriptionPlan = subscriptionPlanRepository.findById(companyDto.subscriptionPlanId)
 
-        if (subscriptionPlan.isEmpty) {
+        if (!subscriptionPlan.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -60,13 +60,13 @@ class CompanyService {
     fun updateCompany(companyDto: CompanyRegistrationDto, id: Long): CompanyDto {
         val subscriptionPlan = subscriptionPlanRepository.findById(companyDto.subscriptionPlanId)
 
-        if (subscriptionPlan.isEmpty) {
+        if (!subscriptionPlan.isPresent) {
             throw ResourceNotFoundException()
         }
 
         val company = companyRepository.findById(id)
 
-        if (company.isEmpty) {
+        if (!company.isPresent) {
             throw ResourceNotFoundException()
         }
 

@@ -25,7 +25,7 @@ class ApplicationService {
     fun getAllApplicationsForCompanyId(companyId: Long): List<ApplicationDto> {
         val company = companyRepository.findById(companyId)
 
-        if (company.isEmpty) {
+        if (!company.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -35,7 +35,7 @@ class ApplicationService {
     fun getApplicationById(id: Long): ApplicationDto {
         val application = applicationRespository.findById(id)
 
-        if (application.isEmpty) {
+        if (!application.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -49,7 +49,7 @@ class ApplicationService {
     fun createApplication(applicationDto: ApplicationCreationDto): ApplicationDto {
         val company = companyRepository.findById(applicationDto.companyId)
 
-        if (company.isEmpty) {
+        if (!company.isPresent) {
             throw ResourceNotFoundException()
         }
 
@@ -63,13 +63,13 @@ class ApplicationService {
     fun updateApplication(applicationDto: ApplicationCreationDto, id: Long): ApplicationDto {
         val company = companyRepository.findById(applicationDto.companyId)
 
-        if (company.isEmpty) {
+        if (!company.isPresent) {
             throw ResourceNotFoundException()
         }
 
         val application = applicationRespository.findById(id)
 
-        if (application.isEmpty) {
+        if (!application.isPresent) {
             throw ResourceNotFoundException()
         }
 

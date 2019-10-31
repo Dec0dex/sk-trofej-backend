@@ -30,7 +30,7 @@ class DeviceService {
     fun getDevicesForApplicationId(pageable: Pageable, predicate: Predicate?, applicationId: Long): Page<DeviceDto> {
         val application = applicationRepository.findById(applicationId)
 
-        if (application.isEmpty) {
+        if (!application.isPresent) {
             throw ResourceNotFoundException()
         }
 
