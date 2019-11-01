@@ -6,6 +6,7 @@ set -o pipefail
 DEPLOY_SERVER='192.168.134.101'
 DEPLOY_SERVER_USERNAME='android'
 DEPLOY_SERVER_PASSWORD='rootdroid'
+SERVER_MAC='30:5a:3a:7f:9b:3f'
 
 # Get information about the project
 VERSION=$(mvn -q \
@@ -24,11 +25,12 @@ ARTIFACT_FULL_NAME=${ARTIFACT}-${VERSION}.jar
 sshpass -p "$DEPLOY_SERVER_PASSWORD" ssh ${DEPLOY_SERVER_USERNAME}@${DEPLOY_SERVER} "mkdir -p /home/${DEPLOY_SERVER_USERNAME}/${ARTIFACT}"
 
 # Copy artifact to the remote
-sshpass -p "$DEPLOY_SERVER_PASSWORD" scp target/${ARTIFACT_FULL_NAME} ${DEPLOY_SERVER_USERNAME}@${DEPLOY_SERVER}:/home/${DEPLOY_SERVER_USERNAME}/${ARTIFACT}/${ARTIFACT}.jar
+sshpass -p "$DEPLOY_SERVER_PASSWORD" scp target/${ARTIFACT_FULL_NAME} ${DEPLOY_SERVER_USERNAME}@${DEPLOY_SERVER}:/home/${DEPLOY_SERVER_USERNAME}/${ARTIFACT}/${ARTIFACT_FULL_NAME}
 
 # Connect to the remote and Run spring boot app
 sshpass -p "$DEPLOY_SERVER_PASSWORD" ssh -t ${DEPLOY_SERVER_USERNAME}@${DEPLOY_SERVER} """
-    sudo ln -s /home/${DEPLOY_SERVER_USERNAME}/${ARTIFACT}/${ARTIFACT}.jar /etc/init.d/${ARTIFACT}
+    rm /home/${DEPLOY_SERVER_USERNAME}/${ARTIFACT}/${ARTIFACT}.jar
+    ln -s /home/${DEPLOY_SERVER_USERNAME}/${ARTIFACT}/${ARTIFACT_FULL_NAME} /home/${DEPLOY_SERVER_USERNAME}/${ARTIFACT}/${ARTIFACT}.jar
 
     status=$(systemctl is-active $ARTIFACT)
     activeStatus="active"
