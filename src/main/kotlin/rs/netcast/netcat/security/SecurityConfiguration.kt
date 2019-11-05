@@ -28,7 +28,6 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
         http.cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "*", "*/*", "*/**", "**/**").permitAll()
                 .antMatchers(
                         "/api/docs",
                         "/actuator/**",
@@ -47,6 +46,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
                 .antMatchers(HttpMethod.POST, "/api/auth").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/subscription-plan/").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/subscription-plan").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(UserAuthenticationFilter(authenticationManager()))
@@ -69,8 +69,11 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", CorsConfiguration().applyPermitDefaultValues())
-
+        val conf = CorsConfiguration()
+        conf.addAllowedHeader("*")
+        conf.addAllowedMethod("*")
+        conf.addAllowedOrigin("*")
+        source.registerCorsConfiguration("/**", conf)
         return source
     }
 
