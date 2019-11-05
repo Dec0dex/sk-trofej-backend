@@ -5,9 +5,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 import rs.netcast.netcat.domain.dto.UserDto
 import rs.netcast.netcat.domain.dto.UserRegistrationDto
-import rs.netcast.netcat.security.NetCatUserPrincipal
 import rs.netcast.netcat.services.UserService
-import java.security.Principal
 
 @RestController
 @RequestMapping("/api/user")
@@ -18,7 +16,7 @@ class UserController {
 
     @GetMapping
     fun getAuthenticatedUserInfo(auth: Authentication): UserDto {
-      return userService.getUserByUsername(auth.principal as String)
+        return userService.getUserByUsername(auth.principal as String)
     }
 
     @GetMapping("/company/{companyId}")
@@ -43,7 +41,7 @@ class UserController {
 
     @PutMapping("/{id}")
     fun updateUser(
-        @PathVariable id: Long, @RequestBody userDto: UserRegistrationDto
+            @PathVariable id: Long, @RequestBody userDto: UserRegistrationDto
     ): UserDto {
         return userService.updateUser(userDto, id)
     }
