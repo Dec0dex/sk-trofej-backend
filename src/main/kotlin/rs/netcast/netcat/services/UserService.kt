@@ -78,7 +78,7 @@ class UserService {
         }
 
         user.get().email = userDto.email
-        user.get().password = userDto.password
+        user.get().password = passwordEncoder.encode(userDto.password)
 
         return UserDto(userRepository.save(user.get()))
     }
