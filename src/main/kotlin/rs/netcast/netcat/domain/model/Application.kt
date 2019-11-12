@@ -42,7 +42,7 @@ data class Application(
         joinColumns = [JoinColumn(name = "application_id")],
         inverseJoinColumns = [JoinColumn(name = "device_id")]
     )
-    val devices: List<Device> = ArrayList(),
+    val devices: MutableList<Device> = ArrayList(),
 
     @OneToMany(
         cascade = [CascadeType.ALL],

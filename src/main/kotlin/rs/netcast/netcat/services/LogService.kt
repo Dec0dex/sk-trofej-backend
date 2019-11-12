@@ -75,6 +75,8 @@ class LogService {
     fun createLog(logDto: LogCreationDto): LogDto {
         val application = getApplicationFromAccessToken(logDto.accessToken)
         val device = getUpdatedDevice(logDto.mac, logDto.os, logDto.ip, logDto.email, application)
+        application.devices.add(device)
+        applicationRepository.save(application)
 
         val log =
             Log(logDto.level, logDto.timestamp, logDto.tag, logDto.message, logDto.affectedVersion, device, application)
