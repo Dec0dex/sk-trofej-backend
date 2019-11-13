@@ -17,6 +17,7 @@ class LogDto() {
         device = DeviceDto(log.device)
         timestamp = log.timeStamp
         id = log.id
+        occurrences = log.occurrences
     }
 
     lateinit var level: LogLevel
@@ -29,5 +30,6 @@ class LogDto() {
     lateinit var device: DeviceDto
     var timestamp: Long = 0
     var id: Long = 0
+    var occurrences: Int = 0
 
 }

@@ -20,7 +20,7 @@ data class Log(
 
     val affectedVersion: String,
 
-    var occurances: Int,
+    var occurrences: Int,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "device_id", nullable = false)
