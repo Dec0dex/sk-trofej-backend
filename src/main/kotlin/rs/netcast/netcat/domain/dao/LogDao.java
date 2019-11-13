@@ -16,9 +16,13 @@ import rs.netcast.netcat.domain.model.Application;
 import rs.netcast.netcat.domain.model.Log;
 import rs.netcast.netcat.domain.model.QLog;
 
+import java.util.Optional;
+
 public interface LogDao extends JpaRepository<Log, Long>, QuerydslPredicateExecutor<Log>, QuerydslBinderCustomizer<QLog> {
 
     void deleteAllByApplication(Application application);
+
+    Optional<Log> findLogByMessageAndTagAndAffectedVersion(String message, String tag, String affectedVersion);
 
     @NotNull
     Page<Log> findAll(@Nullable Predicate predicate, @NotNull Pageable pageable);

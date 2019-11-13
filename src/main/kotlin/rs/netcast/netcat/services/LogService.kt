@@ -78,18 +78,30 @@ class LogService {
         application.devices.add(device)
         applicationRepository.save(application)
 
-        val log =
-            Log(logDto.level, logDto.timestamp, logDto.tag, logDto.message, logDto.affectedVersion, device, application)
-
+        val log = updateLogOrCreateNew(logDto, device, application)
         return LogDto(logRepository.save(log))
+    }
+
+    private fun updateLogOrCreateNew(logDto: LogCreationDto, device: Device, application: Application): Log {
+        val repoLog = logRepository.findLogByMessageAndTagAndAffectedVersion(logDto.message, logDto.tag, logDto.affectedVersion)
+
+        val log = if (repoLog.isPresent) {
+            val result = repoLog.get()
+            result.occurances += 1
+            result
+        } else {
+            Log(logDto.level, logDto.timestamp, logDto.tag, logDto.message, logDto.affectedVersion, 1, device, application)
+        }
+
+        return logRepository.save(log)
     }
 
     private fun getApplicationFromAccessToken(token: String): Application {
         val signingKey = SecurityConstants.JWT_SECRET.toByteArray()
 
         val parsedToken = Jwts.parser()
-            .setSigningKey(signingKey)
-            .parseClaimsJws(token)
+                .setSigningKey(signingKey)
+                .parseClaimsJws(token)
 
         val applicationId = parsedToken.body.subject.toLong()
         val application = applicationRepository.findById(applicationId)
@@ -102,11 +114,11 @@ class LogService {
     }
 
     private fun getUpdatedDevice(
-        mac: String,
-        os: String,
-        ip: String,
-        email: String?,
-        application: Application
+            mac: String,
+            os: String,
+            ip: String,
+            email: String?,
+            application: Application
     ): Device {
         return if (deviceRepository.existsById(mac)) {
             val device = deviceRepository.findById(mac)
