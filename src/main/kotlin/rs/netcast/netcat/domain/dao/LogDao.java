@@ -22,7 +22,7 @@ public interface LogDao extends JpaRepository<Log, Long>, QuerydslPredicateExecu
 
     void deleteAllByApplication(Application application);
 
-    Optional<Log> findLogByMessageAndTagAndAffectedVersion(String message, String tag, String affectedVersion);
+    Optional<Log> findByMessageAndTagAndAffectedVersion(String message, String tag, String affectedVersion);
 
     @NotNull
     Page<Log> findAll(@Nullable Predicate predicate, @NotNull Pageable pageable);

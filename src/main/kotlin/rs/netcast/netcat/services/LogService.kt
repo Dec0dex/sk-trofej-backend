@@ -83,7 +83,7 @@ class LogService {
     }
 
     private fun updateLogOrCreateNew(logDto: LogCreationDto, device: Device, application: Application): Log {
-        val repoLog = logRepository.findLogByMessageAndTagAndAffectedVersion(logDto.message, logDto.tag, logDto.affectedVersion)
+        val repoLog = logRepository.findByMessageAndTagAndAffectedVersion(logDto.message, logDto.tag, logDto.affectedVersion)
 
         val log = if (repoLog.isPresent) {
             val result = repoLog.get()
