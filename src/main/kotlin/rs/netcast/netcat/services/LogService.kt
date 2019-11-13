@@ -87,7 +87,7 @@ class LogService {
 
         val log = if (repoLog.isPresent) {
             val result = repoLog.get()
-            result.occurances += 1
+            result.occurrences += 1
             result
         } else {
             Log(logDto.level, logDto.timestamp, logDto.tag, logDto.message, logDto.affectedVersion, 1, device, application)
