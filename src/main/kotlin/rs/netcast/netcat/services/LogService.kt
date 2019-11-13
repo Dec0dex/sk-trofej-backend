@@ -14,6 +14,7 @@ import rs.netcast.netcat.domain.dto.LogDto
 import rs.netcast.netcat.domain.model.Application
 import rs.netcast.netcat.domain.model.Device
 import rs.netcast.netcat.domain.model.Log
+import rs.netcast.netcat.domain.model.LogLevel
 import rs.netcast.netcat.exceptions.ResourceNotFoundException
 import rs.netcast.netcat.security.SecurityConstants
 import rs.netcast.netcat.services.querydsl.QueryDslProvider
@@ -85,7 +86,7 @@ class LogService {
     private fun updateLogOrCreateNew(logDto: LogCreationDto, device: Device, application: Application): Log {
         val repoLog = logRepository.findByMessageAndTagAndAffectedVersion(logDto.message, logDto.tag, logDto.affectedVersion)
 
-        val log = if (repoLog.isPresent) {
+        val log = if (logDto.level != LogLevel.FLOW && repoLog.isPresent) {
             val result = repoLog.get()
             result.occurrences += 1
             result
