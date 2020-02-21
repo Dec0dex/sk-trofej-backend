@@ -8,11 +8,11 @@
         <version>2.1.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>rs.netcast</groupId>
-    <artifactId>netcat-backend</artifactId>
+    <groupId>net.decodex</groupId>
+    <artifactId>sk-trofej-backend</artifactId>
     <version>0.0.1</version>
-    <name>netcat-backend</name>
-    <description>Advanced Crash and Logging system</description>
+    <name>sk-trofej-backend</name>
+    <description>Sk trofej backend aplikacija</description>
 
     <properties>
         <java.version>1.8</java.version>
